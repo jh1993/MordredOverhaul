@@ -1,3 +1,5 @@
+PLEASE CHECK THE DISCORD THREAD FOR UPDATE NOTICES, AND RE-DOWNLOAD THE MOD WHENEVER THERE'S AN UPDATE.
+
 To install this mod, click on the green "Code" button on this page, then "Download ZIP". Please rename the "MordredOverhaul-main" folder to "MordredOverhaul" before putting it into your mods folder.
 
 This mod completely overhauls the final boss, Mordred. The reasoning behind such is backed by a number of common complaints about him:
