@@ -8,10 +8,10 @@ This mod completely overhauls the final boss, Mordred. The reasoning behind such
 3) Since Mordred planeshifts the whole realm at once, there's a very high chance that your minions will be shifted away. On spammy minion builds this isn't a big deal, but it's unnecessarily punishing for builds that use a small number of powerful minions.
 4) Mordred himself isn't too threatening, except for his melee attack that's capable of often killing you instantly. Making sure to stay out of his melee range is all well and good, but certain effects can randomly teleport him next to you or vice versa, resulting in a very sudden and unceremonious death.
 
-To address issues 1 to 3 above, this mod changes Mordred's planeshift to only affect an area of radius 4 around himself, but its cooldown is reduced to 7 turns, and it generates twice the usual monster variety, four times the usual amount of monsters, and eight times the usual amount of bosses. His needlessly annoying Void Tango spell is gone, replaced by teleporting near you combined with the aforementioned limited-radius planeshift. This should make it much easier to recognize and predict the impact of each planeshift he performs, and make it less likely for your minions to be erased.
+To address issues 1 to 3 above, this mod changes Mordred's planeshift to only affect an area of radius 4 around himself, but it generates four times the usual amount of monsters. His needlessly annoying Void Tango spell is gone, replaced by teleporting near you combined with the aforementioned limited-radius planeshift. This should make it much easier to recognize and predict the impact of each planeshift he performs, and make it less likely for your minions to be erased.
 
 To address issue 4, and to make the final battle more exciting in general, Mordred himself now has completely different spells:
-- Reality Tear: 4 radius; 7 turns cooldown. Teleport near the wizard and corrupt reality around self. The reworked planeshift, as above.
+- Reality Tear: 4 radius; 13 turns cooldown. Teleport near the wizard and corrupt reality around self. The reworked planeshift, as above.
 - Energy Beam: 2 damage; 16 range; 3 turns cooldown. Deals fire, holy, and arcane damage in a beam; melts walls.
 - Storm Blast: 4 damage; 10 range; 2 radius; 3 turns cooldown. Deals lightning and ice damage; creates thunderstorm and blizzard clouds.
 - Blight Wave: 3 damage; 12 range; 3 turns cooldown. Deals dark, poison, and physical damage in a cone; inflicts 2 turns of poison.

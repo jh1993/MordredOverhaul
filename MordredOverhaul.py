@@ -59,7 +59,7 @@ class MordredRealityTear(Spell):
     def on_init(self):
         self.name = "Reality Tear"
         self.description = "Teleport near the wizard and corrupt reality around self."
-        self.cool_down = 7
+        self.cool_down = 13
         self.range = 0
         self.radius = 4
         self.num_exits = 0
@@ -77,7 +77,7 @@ class MordredRealityTear(Spell):
         gen_params.num_exits = self.num_exits
         gen_params.num_monsters = 100
         gen_params.num_generators = 36
-        change_last_level(gen_params, extra_enemy_types=3, num_bosses=24, add_mordred=False)
+        change_last_level(gen_params, extra_enemy_types=1, num_bosses=12, add_mordred=False)
         new_level = gen_params.make_level()
 
         # For the new level, pick some swaths of it.
