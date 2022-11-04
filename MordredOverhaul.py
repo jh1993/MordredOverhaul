@@ -6,59 +6,76 @@ import sys, random
 
 curr_module = sys.modules[__name__]
 
-class MordredEnergyBeam(SimpleRangedAttack):
+class MordredRiftBeam(SimpleRangedAttack):
 
-    def __init__(self):
-        SimpleRangedAttack.__init__(self, name="Energy Beam", damage=2, damage_type=None, range=16, beam=True, melt=True, cool_down=3)
-        self.description = "Deals fire, holy, and arcane damage in a beam; melts walls."
-        self.tags = [Tags.Fire, Tags.Holy, Tags.Arcane]
+    def __init__(self, spells):
+        self.spells = spells
+        SimpleRangedAttack.__init__(self, name="Rift Beam", damage=2, damage_type=None, range=16, beam=True, melt=True)
+        self.description = "Deals 3 random damage types in a beam; melts walls. Switches to a random spell after casting."
+
+    def get_stat(self, attr, base=None):
+        if attr == "radius":
+            return 0
+        return SimpleRangedAttack.get_stat(self, attr, base)
 
     def hit(self, x, y):
         damage = self.get_stat("damage")
-        for dtype in [Tags.Fire, Tags.Holy, Tags.Arcane]:
-            self.caster.level.deal_damage(x, y, damage, dtype, self)
+        for _ in range(3):
+            self.caster.level.deal_damage(x, y, damage, random.choice([Tags.Holy, Tags.Dark, Tags.Poison, Tags.Lightning, Tags.Physical, Tags.Arcane, Tags.Fire, Tags.Ice]), self)
 
-class MordredStormBlast(SimpleRangedAttack):
+    def cast(self, x, y):
+        yield from SimpleRangedAttack.cast(self, x, y)
+        self.caster.spells.remove(self)
+        self.caster.spells.append(random.choice(self.spells))
 
-    def __init__(self):
-        SimpleRangedAttack.__init__(self, name="Storm Blast", damage=4, damage_type=None, range=10, radius=2, cool_down=3)
-        self.description = "Deals lightning and ice damage; creates thunderstorm and blizzard clouds."
-        self.tags = [Tags.Lightning, Tags.Ice]
-        self.effect = self.tags
+class MordredRiftBlast(SimpleRangedAttack):
+
+    def __init__(self, spells):
+        self.spells = spells
+        SimpleRangedAttack.__init__(self, name="Rift Blast", damage=4, damage_type=None, range=10, radius=2)
+        self.description = "Deals 3 random damage types. Switches to a random spell after casting."
+        self.effect = [Tags.Holy, Tags.Dark, Tags.Poison, Tags.Lightning, Tags.Physical, Tags.Arcane, Tags.Fire, Tags.Ice]
     
     def hit(self, x, y):
         damage = self.get_stat("damage")
-        for dtype in [Tags.Lightning, Tags.Ice]:
-            self.caster.level.deal_damage(x, y, damage, dtype, self)
-        cloud_type = random.choice([StormCloud, BlizzardCloud])
-        cloud = cloud_type(owner=self.caster)
-        cloud.source = self
-        self.caster.level.add_obj(cloud, x, y)
+        for _ in range(3):
+            self.caster.level.deal_damage(x, y, damage, random.choice(self.effect), self)
 
-class MordredBlightWave(BreathWeapon):
+    def cast(self, x, y):
+        yield from SimpleRangedAttack.cast(self, x, y)
+        self.caster.spells.remove(self)
+        self.caster.spells.append(random.choice(self.spells))
 
-    def __init__(self):
+class MordredRiftWave(BreathWeapon):
+
+    def __init__(self, spells):
+        self.spells = spells
         BreathWeapon.__init__(self)
         self.damage_type = None
         self.damage = 3
         self.range = 12
-        self.name = "Blight Wave"
-        self.description = "Deals dark, poison, and physical damage in a cone; inflicts 2 turns of poison."
-        self.tags = [Tags.Dark, Tags.Poison, Tags.Physical]
+        self.cool_down = 0
+        self.name = "Rift Wave"
+        self.description = "Deals 3 random damage types in a cone. Switches to a random spell after casting."
 
     def per_square_effect(self, x, y):
         damage = self.get_stat("damage")
-        for dtype in [Tags.Dark, Tags.Poison, Tags.Physical]:
-            self.caster.level.deal_damage(x, y, damage, dtype, self)
-        unit = self.caster.level.get_unit_at(x, y)
-        if unit:
-            unit.apply_buff(Poison(), 2)
+        for _ in range(3):
+            self.caster.level.deal_damage(x, y, damage, random.choice([Tags.Holy, Tags.Dark, Tags.Poison, Tags.Lightning, Tags.Physical, Tags.Arcane, Tags.Fire, Tags.Ice]), self)
 
-class MordredRealityTear(Spell):
+    def cast(self, x, y):
+        yield from BreathWeapon.cast(self, x, y)
+        self.caster.spells.remove(self)
+        self.caster.spells.append(random.choice(self.spells))
+
+class MordredRiftWizardry(Spell):
 
     def on_init(self):
-        self.name = "Reality Tear"
-        self.description = "Teleport near the wizard and corrupt reality around self."
+        self.name = "Rift Wizardry"
+        if "mods.BugsAndScams.NoMoreScams" in sys.modules:
+            self.description = "Teleport near the Wizard and mix the current realm with another.\nFriends and foes may be left behind; Mordred, the Wizard, and minions summoned by Conjuration skills will always remain."
+        else:
+            self.description = "Teleport near the Wizard and mix the current realm with another.\nFriends and foes may be left behind; Mordred and the Wizard will always remain."
         self.cool_down = 13
         self.range = 0
         self.radius = 4
@@ -157,14 +174,10 @@ class MordredRealityTear(Spell):
 class MordredReincarnationBuff(ReincarnationBuff):
     def __init__(self, lives=1):
         ReincarnationBuff.__init__(self, lives=lives)
+        self.color = Color(216, 27, 96)
     def respawn(self):
-        for spell in self.owner.spells:
-            if hasattr(spell, "radius") and spell.radius > 0:
-                spell.radius += 1
-            if spell.range > 0:
-                spell.range += 1
-            if hasattr(spell, "damage"):
-                spell.damage += 1
+        for attr in ["damage", "range", "radius"]:
+            self.owner.global_bonuses[attr] += 1
         self.owner.level.queue_spell(ReincarnationBuff.respawn(self))
         yield
     def get_tooltip(self):
@@ -180,7 +193,14 @@ def MordredOverhauled():
     unit.gets_clarity = True
     unit.is_final_boss = True
 
-    unit.spells = [MordredRealityTear(), MordredEnergyBeam(), MordredStormBlast(), MordredBlightWave()]
+    spells = []
+    spells.append(MordredRiftBeam(spells))
+    spells.append(MordredRiftBlast(spells))
+    spells.append(MordredRiftWave(spells))
+    for spell in spells:
+        spell.caster = unit
+        spell.owner = unit
+    unit.spells = [MordredRiftWizardry(), random.choice(spells)]
     
     unit.buffs.append(MordredReincarnationBuff(4))
 

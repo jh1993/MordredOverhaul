@@ -11,10 +11,11 @@ This mod completely overhauls the final boss, Mordred. The reasoning behind such
 To address issues 1 to 3 above, this mod changes Mordred's planeshift to only affect an area of radius 4 around himself, but it generates four times the usual amount of monsters. His needlessly annoying Void Tango spell is gone, replaced by teleporting near you combined with the aforementioned limited-radius planeshift. This should make it much easier to recognize and predict the impact of each planeshift he performs, and make it less likely for your minions to be erased.
 
 To address issue 4, and to make the final battle more exciting in general, Mordred himself now has completely different spells:
-- Reality Tear: 4 radius; 13 turns cooldown. Teleport near the wizard and corrupt reality around self. The reworked planeshift, as above.
-- Energy Beam: 2 damage; 16 range; 3 turns cooldown. Deals fire, holy, and arcane damage in a beam; melts walls.
-- Storm Blast: 4 damage; 10 range; 2 radius; 3 turns cooldown. Deals lightning and ice damage; creates thunderstorm and blizzard clouds.
-- Blight Wave: 3 damage; 12 range; 3 turns cooldown. Deals dark, poison, and physical damage in a cone; inflicts 2 turns of poison.
+- Rift Wizardry: 4 radius; 13 turns cooldown. Teleport near the wizard and planeshift around self. The reworked planeshift, as above.
+- Rift Beam: 2 damage; 16 range; 3 turns cooldown. Deals 3 random damage types in a beam; melts walls. Switches to a random spell after casting.
+- Rift Blast: 4 damage; 10 range; 2 radius; 3 turns cooldown. Deals 3 random damage types. Switches to a random spell after casting.
+- Rift Wave: 3 damage; 12 range; 3 turns cooldown. Deals 3 random damage types in a cone. Switches to a random spell after casting.
+Out of the last three spells, he'll only have one at a time, but switch to a random one after each cast.
 Moreover, all of Mordred's spells that have the relevant stats will gain +1 base damage, range, and radius for each reincarnation he loses. As a result, he'll become substantially more dangerous as the fight progresses.
 
 Finally, since the initial layout of realm 25 is no longer immediately planeshifted away by Mordred wholesale, the enemy spawns on this level are now comparable to previous levels, and the most powerful types of regular endgame enemies that otherwise do not have gates can have them in this final level, e.g. glass butterflies and gold skulls. Whenever Mordred planeshifts, he will now always generate the new level according to these parameters.
