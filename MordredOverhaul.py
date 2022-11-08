@@ -147,10 +147,7 @@ class MordredRiftWizardry(Spell):
             if unit:
                 new_level.remove_obj(unit)
             if unit and not cur_tile.unit:
-                if "mods.BugsAndScams.Bugfixes" in sys.modules:
-                    self.caster.level.add_obj(unit, i, j, trigger_summon_event=False)
-                else:
-                    self.caster.level.add_obj(unit, i, j)
+                self.caster.level.add_obj(unit, i, j)
 
             prop = new_tile.prop
             if prop:
